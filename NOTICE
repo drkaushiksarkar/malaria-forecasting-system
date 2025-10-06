@@ -1,2 +1,18 @@
 Malaria Forecasting System
-Copyright (c) 2025 Your Exact Name Here
+Developer: Kaushik Sarkar (drkaushiksarkar)
+
+This software is developed to support climate-informed early warning surveillance, prediction, and decision-making.
+
+If you use this software, model, or methodology in your research or publication, please cite it as follows:
+
+---
+CITATION:
+Sarkar, K. (2025). *Malaria Forecasting System: A Streaming Inference and Adaptive Fine-Tuning Framework*. GitHub repository: https://github.com/drkaushiksarkar/malaria-forecasting-system
+---
+
+ACKNOWLEDGMENT:
+If used in research or operational contexts, please acknowledge:
+“Developed by Kaushik Sarkar (drkaushiksarkar), Institute for Health Modeling and Climate Solutions (IMACS) as part of the Climate Informed Early Warning Surveillance project funded by The Global Fund COVID19 Response Mechanism (C19RM) funding.”
+
+LICENSE:
+This project is distributed under the terms of the MIT License (see LICENSE file).
