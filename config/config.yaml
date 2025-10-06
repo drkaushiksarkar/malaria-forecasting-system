@@ -1,0 +1,16 @@
+app:
+  port: 8080
+paths:
+  model_root: ${MODEL_ROOT}
+  stream_data: ${STREAM_DATA_PATH}
+  verification: ${VERIFICATION_PATH}
+forecast:
+  seq_len: 12
+  indicators: [Average_temperature, Total_rainfall, Relative_humidity, Average_NDVI, Average_NDWI]
+  targets: [pv_rate, pf_rate, mixed_rate]
+finetune:
+  threshold_smape: 0.15
+  min_samples: 24
+  epochs: 50
+  batch_size: 32
+  lr: 5e-5

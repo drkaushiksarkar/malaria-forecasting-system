@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: malaria-config
+data:
+  APP_PORT: "8080"
+  DATABASE_URL: "postgresql+psycopg2://malaria_user:malaria_pass@postgres:5432/malaria"

@@ -1,0 +1,16 @@
+name: Verify Developer Name
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify developer name presence
+        run: |
+          set -e
+          grep -q "Kaushik Sarkar" DEVELOPERS.md
+          echo "✅ Developer name check passed"

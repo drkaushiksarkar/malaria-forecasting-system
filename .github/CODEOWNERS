@@ -1,0 +1,4 @@
+# Require @drkaushiksarkar approval for key files
+/DEVELOPERS.md    @drkaushiksarkar
+/docs/**          @drkaushiksarkar
+/README.md        @drkaushiksarkar

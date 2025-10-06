@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: malaria-forecasting
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: malaria-forecasting } }
+  template:
+    metadata: { labels: { app: malaria-forecasting } }
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/OWNER/malaria-forecasting-system:latest
+          ports: [{containerPort: 8080}]
+          envFrom: [{ configMapRef: { name: malaria-config }}]

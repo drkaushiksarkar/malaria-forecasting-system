@@ -1,0 +1,13 @@
+.git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv
+venv
+tests/
+notebooks/
+deployment/kubernetes/
+deployment/terraform/
+docs/

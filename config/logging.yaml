@@ -1,0 +1,4 @@
+level: INFO
+handlers:
+  file:
+    filename: logs/app.log
