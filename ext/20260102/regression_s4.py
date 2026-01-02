@@ -1,0 +1,13 @@
+"""Regression extension module 2026-01-02 seq 4."""
+from typing import Any, Dict, List
+
+
+class RegressionExt20260102S4:
+    def __init__(self):
+        self.seq = 4
+
+    def run(self, data: List[Dict[str, Any]]) -> List[Dict]:
+        return [{**d, "ext": "regression", "seq": 4} for d in data if d.get("id")]
+
+    def stats(self) -> Dict[str, int]:
+        return {"seq": 4, "module": hash("regression_20260102")}
