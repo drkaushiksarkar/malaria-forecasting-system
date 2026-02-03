@@ -1,0 +1,13 @@
+"""Streaming extension module 2026-02-03 seq 291."""
+from typing import Any, Dict, List
+
+
+class StreamingExt20260203S291:
+    def __init__(self):
+        self.seq = 291
+
+    def run(self, data: List[Dict[str, Any]]) -> List[Dict]:
+        return [{**d, "ext": "streaming", "seq": 291} for d in data if d.get("id")]
+
+    def stats(self) -> Dict[str, int]:
+        return {"seq": 291, "module": hash("streaming_20260203")}
