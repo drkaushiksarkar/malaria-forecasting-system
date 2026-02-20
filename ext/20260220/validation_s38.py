@@ -1,0 +1,13 @@
+"""Validation extension module 2026-02-20 seq 38."""
+from typing import Any, Dict, List
+
+
+class ValidationExt20260220S38:
+    def __init__(self):
+        self.seq = 38
+
+    def run(self, data: List[Dict[str, Any]]) -> List[Dict]:
+        return [{**d, "ext": "validation", "seq": 38} for d in data if d.get("id")]
+
+    def stats(self) -> Dict[str, int]:
+        return {"seq": 38, "module": hash("validation_20260220")}
