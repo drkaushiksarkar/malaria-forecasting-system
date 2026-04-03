@@ -1,41 +1,83 @@
-# Malaria Forecasting System
+# malaria-forecasting-system
 
-Streaming malaria forecasting as a service:
-- Ingests data from PostgreSQL
-- Generates forecasts (PV/PF/Mixed rates), verifies against observations, and can fine-tune
-- Exposes a REST API (FastAPI)
-- Schedulable batch runs
-- Docker/Kubernetes ready
-- CI/CD via GitHub Actions
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Agents](https://img.shields.io/badge/Agentic_AI-FF6F00?style=flat-square)
 
-## Key Features
-- **Forecasting**: multi-step malaria rate forecasts per Upazila.
-- **Verification**: SMAPE, RMSE, MAE, coverage@90% with JSONL logs.
-- **Fine-tuning**: optional incremental updates when error/coverage degrades.
-- **DB I/O**: SQLAlchemy reads/writes from/to PostgreSQL.
-- **Ops**: Docker, docker-compose, K8s manifests, GHCR publish, tests, lint.
+Production malaria incidence forecasting with autonomous pipeline orchestration, Terraform-managed cloud infrastructure, and self-healing deployment.
 
-## Quickstart (Local)
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt -r requirements-dev.txt
-cp .env.example .env
-# (optional) start postgres via compose
-docker compose -f deployment/docker/docker-compose.yml up -d db
-python scripts/setup_database.py
-uvicorn src.service.main:app --port 8080 --reload
+---
+
+## Architecture
+
 ```
-Open http://127.0.0.1:8000/docs
-
-Trigger a forecast:
-```bash
-curl -X POST http://127.0.0.1:8000/forecast/run   -H 'content-type: application/json'   -d '{"target":"pv_rate","horizon":3}'
+                    AutonomousPipelineAgent
+                    (self-healing orchestrator)
+                            |
+        +-------------------+-------------------+
+        |                   |                   |
+    Ingest              Validate             Train
+    (HMIS, DHIS2,       (schema, range,      (gradient boosted
+     climate API)        continuity)          ensemble, 24 features)
+        |                   |                   |
+        +-------------------+-------------------+
+                            |
+        +-------------------+-------------------+
+        |                   |                   |
+    Forecast            Verify              Deploy
+    (multi-country,     (SMAPE, RMSE,       (Terraform, Docker,
+     6-month horizon)    coverage@90)        health check)
+                            |
+                       AlertAgent
+                    (anomaly detection,
+                     severity classification,
+                     rate-limited notifications)
 ```
 
-## Repository Map
-See `docs/ARCHITECTURE.md` and `docs/DEPLOYMENT.md`.
+## Agent system
 
-## License & Notices
-- License: MIT (see `LICENSE`)
-- Notices: see `NOTICE` (if present)
-- Developers: see `DEVELOPERS.md`
+The `agents/` package implements autonomous pipeline orchestration:
+
+- **AutonomousPipelineAgent** -- Self-healing pipeline that orchestrates end-to-end forecasting: data ingestion, validation, model training, forecast generation, verification, and deployment. Detects failures, retries with exponential backoff, and falls back to last known good model.
+
+- **AlertAgent** -- Monitors forecast outputs for anomalies using threshold-based and statistical detection. Classifies alert severity (info, warning, critical) and dispatches notifications with rate limiting to prevent alert storms.
+
+## Components
+
+| Module | Purpose |
+|:-------|:--------|
+| `agents/pipeline_agent.py` | Autonomous pipeline orchestration with checkpoint/resume |
+| `agents/__init__.py` | Agent package exports |
+| `forecasting/` | Model training, prediction, and verification |
+| `ingestion/` | Data ingestion from HMIS, DHIS2, and climate APIs |
+| `infrastructure/` | Terraform modules for AWS deployment |
+| `api/` | FastAPI serving layer for forecast endpoints |
+
+## Deployment
+
+```bash
+# Infrastructure provisioning
+cd infrastructure && terraform init && terraform apply
+
+# Docker deployment
+docker build -t malaria-forecast .
+docker run -p 8000:8000 malaria-forecast
+
+# Run autonomous pipeline
+python -m agents.pipeline_agent
+```
+
+## Monitoring
+
+| Metric | Threshold | Alert |
+|:-------|:----------|:------|
+| SMAPE | < 0.15 | Warning if exceeded |
+| RMSE | < 0.10 | Warning if exceeded |
+| Coverage@90 | > 0.85 | Critical if below |
+| Forecast deviation | > 50% baseline | Critical |
+
+## License
+
+MIT
