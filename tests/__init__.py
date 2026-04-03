@@ -1,1 +1,1 @@
-# empty
+"""Tests for malaria forecasting agents."""
