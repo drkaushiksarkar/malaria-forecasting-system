@@ -1,29 +1,23 @@
-# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.egg-info/
-dist/
+*.py[cod]
+*$py.class
+*.so
+.Python
 build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+.env
 .venv/
 venv/
-.env
-.cache/
-.mypy_cache/
 .pytest_cache/
-coverage.xml
+.mypy_cache/
+.ruff_cache/
 htmlcov/
-
-# Data / Artifacts
-data/
-outputs/
-models/
-artifacts/
-logs/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Docker
+.coverage
+.coverage.*
 *.log
+.DS_Store
+*.db
+*.sqlite3
